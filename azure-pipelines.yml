@@ -1,0 +1,52 @@
+trigger:
+- master
+
+stages:
+  - stage: Build
+    displayName: 'Docker Login'
+    jobs:
+    - job: Build
+      displayName: Build
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      # astar.azurecr.io
+      - script: docker login astar.azurecr.io -u $(astar-docker-registry-username) -p $(astar-docker-registry-password)
+        displayName: 'Docker Login'
+      - script: bash build-docker-images.sh --docker-registry=astar.azurecr.io --image-version="0.0.3"
+        displayName: 'Build Docker Images'
+
+  # - stage: Deploy
+  #   displayName: 'Kubernetes Deploy'
+  #   dependsOn: Build
+  #   jobs:
+  #   - deployment: Deploy
+  #     displayName: 'Deploy Job'
+  #     pool:
+  #       vmImage: 'ubuntu-latest'
+  #     strategy:
+  #       runOnce:
+  #         deploy:
+  #           steps:
+  #           - task: KubernetesManifest@0
+  #             displayName: Create imagePullSecret
+  #             inputs:
+  #               action: createSecret
+  #               secretName: astar-docker-registry-secret
+  #               kubernetesServiceConnection: astar-k8s-cluster
+  #               # astar-docker-registry-secret
+  #               namespace: astair
+  #               dockerRegistryEndpoint: "astar.azurecr.io"
+  #           - task: KubernetesManifest@0
+  #             displayName: Deploy to Kubernetes cluster
+  #             inputs:
+  #               action: deploy
+  #               kubernetesServiceConnection: astar-k8s-cluster
+  #               namespace: astair
+  #               manifests: |
+  #                 # $(k8sManifestsDirectory)/deployment.yaml
+  #                 "**/deployment/kubernetes-manifests/pure-manifests/management-app-frontend/deployment.yaml"
+  #               imagePullSecrets: |
+  #                 astar-docker-registry-secret
+  #               containers: |
+  #                 astar.azurecr.io/astair-management-app-frontend:0.0.3

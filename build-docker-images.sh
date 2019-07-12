@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # usage;
-# bash build-docker-images.sh --docker-registry=astar.azurecr.io --version="0.0.1"
+# bash build-docker-images.sh --docker-registry=astar.azurecr.io --image-version="0.0.3"
 
 set -e
 
@@ -26,7 +26,7 @@ services=(
 
 cd feedback-collector/
 docker build -t $docker_registry/astair-feedback-collector:$image_version .
-docker login $docker_registry
+# docker login $docker_registry -u $(astar-docker-registry-username) -p $(astar-docker-registry-password)
 docker push $docker_registry/astair-feedback-collector:$image_version
 
 cd ../

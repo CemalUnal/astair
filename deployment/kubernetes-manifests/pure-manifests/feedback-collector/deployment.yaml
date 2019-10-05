@@ -4,7 +4,7 @@ metadata:
   name: feedback-collector
   namespace: astair
 data:
-  postgresql-url: "postgres://astair%40astair:astarPostgres2019.@astair.postgres.database.azure.com:5432/astair"
+  postgresql-url: ""
 
 ---
 

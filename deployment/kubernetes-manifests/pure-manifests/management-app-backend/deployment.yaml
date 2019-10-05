@@ -4,7 +4,7 @@ metadata:
   name: management-backend
   namespace: astair
 data:
-  postgresql-url: "jdbc:postgresql://astair.postgres.database.azure.com:5432/astair?user=astair@astair&password=astarPostgres2019."
+  postgresql-url: ""
   hikari-connection-timeout: "20000"
   hikari-maximum-pool-size: "5"
   spring-data-driver-class-name: "org.postgresql.Driver"

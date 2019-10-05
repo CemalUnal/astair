@@ -7,6 +7,8 @@ data:
   react-app-astair-management-backend: "https://astair.northeurope.cloudapp.azure.com/astair-management-backend"
   react-app-port: "3000"
   skip-preflight-check: "true"
+  react-app-length: "4"
+  react-app-duration: "15"
 
 ---
 
@@ -48,7 +50,7 @@ spec:
       labels:        
         app: management-frontend
       annotations:
-        checksum/config-map: v7cLoXbjvmnMZwGsS99k5aa9ab4de578d9e8947c8142f135ec17140baf49b68f
+        checksum/config-map: v7c3oXbjvmnMZwGsa99t5aa9ab4de578d9e8947c8142f135ec17140baf49b68f
     spec:
       containers: 
         - image: astar.azurecr.io/astair-management-app-frontend:0.0.3
@@ -62,6 +64,21 @@ spec:
                 configMapKeyRef:
                   name: management-frontend
                   key: react-app-astair-management-backend
+            - name: REACT_APP_LENGTH
+              valueFrom:
+                configMapKeyRef:
+                  name: management-frontend
+                  key: react-app-length
+            - name: REACT_APP_DURATION
+              valueFrom:
+                configMapKeyRef:
+                  name: management-frontend
+                  key: react-app-duration
+            # - name: CHOKIDAR_USEPOLLING
+            #   valueFrom:
+            #     configMapKeyRef:
+            #       name: chokida
+            #       key: react-app-astair-management-backend
             - name: REACT_APP_PORT
               valueFrom:
                 configMapKeyRef:

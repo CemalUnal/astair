@@ -1,0 +1,71 @@
+- task: HelmDeploy@0
+        displayName: 'helm install'
+        inputs:
+          azureSubscription: $(azureResourceGroup)
+          azureResourceGroup: $(azureResourceGroup)
+          kubernetesCluster: $(kubernetesCluster)
+          namespace: astair
+          command: install
+          chartPath: 'deployment/kubernetes-manifests/charts/management-app-frontend'
+          releaseName: test
+          valueFile: values.yaml
+
+
+
+azureSubscription: 'Microsoft Azure Enterprise (7950a89a-ddcb-41b6-bffb-322da49c5bd4)'
+    azureResourceGroup: 'astar-k8s-cluster'
+    kubernetesCluster: 'astar-k8s-cluster'
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: feedback-collector
+  namespace: astair
+data:
+  postgresql-url: "postgres://astair%40astair:astarPostgres2019.@astair.postgres.database.azure.com:5432/astair"
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: management-backend
+  namespace: astair
+data:
+  postgresql-url: jdbc:postgresql://astair.postgres.database.azure.com:5432/astair?user=astair@astair&password=astarPostgres2019.
+  hikari-connection-timeout: "20000"
+  hikari-maximum-pool-size: "5"
+  spring-data-driver-class-name: "org.postgresql.Driver"
+  hibernate-ddl-auto: "update"
+  hibernate-sql-log-level: "DEBUG"
+  server-port: "8090"
+
+
+----------------------
+
+
+
+  - stage: Deploy
+    displayName: 'Kubernetes Deploy'
+    dependsOn: Build
+    jobs:
+    - deployment: Deploy
+      displayName: Deploy
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      - task: HelmDeploy@0
+        displayName: 'helm install'
+        inputs:
+          azureSubscription: $(azureResourceGroup)
+          azureResourceGroup: $(azureResourceGroup)
+          kubernetesCluster: $(kubernetesCluster)
+          namespace: astair
+          command: install
+          chartPath: 'deployment/kubernetes-manifests/charts/management-app-frontend'
+          releaseName: test
+          valueFile: values.yaml
+
+
+https://astair.northeurope.cloudapp.azure.com/astair-management-backend/get-all
+https://astair.northeurope.cloudapp.azure.com/astair-management-backend/AC/get-zone/3
+https://astair.northeurope.cloudapp.azure.com/astair-management-backend/sensor/get-zone/2

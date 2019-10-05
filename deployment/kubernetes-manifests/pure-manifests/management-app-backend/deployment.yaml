@@ -4,7 +4,7 @@ metadata:
   name: management-backend
   namespace: astair
 data:
-  postgresql-url: "postgres-url-here"
+  postgresql-url: "jdbc:postgresql://astair.postgres.database.azure.com:5432/astair?user=astair@astair&password=astarPostgres2019."
   hikari-connection-timeout: "20000"
   hikari-maximum-pool-size: "5"
   spring-data-driver-class-name: "org.postgresql.Driver"
@@ -55,10 +55,10 @@ spec:
         app: management-backend
         release: system
       annotations:
-        checksum/config-map: kRhRA5O5rrMr5Bxw9dNM5aa9ab4de578d9e8947c8142f135ec17140baf49b68f
+        checksum/config-map: kRhRA545rrMr5Bxw9dNMdaa9bt4de578d9e8947c8142f135ec17140baf49b68f
     spec:
       containers:
-        - image: astar.azurecr.io/astair-management-app-back-end:0.0.3
+        - image: astar.azurecr.io/astair-management-app-back-end:0.0.4
           imagePullPolicy: Always
           resources:
             requests:

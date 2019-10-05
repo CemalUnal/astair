@@ -353,7 +353,7 @@ class Charts extends Component {
       this.getSlackData().then(data => {});
     }, 5000);
     const interval2 = setInterval(() => {
-      this.getcompVisionControllerData().then(data => {});
+      // this.getcompVisionControllerData().then(data => {});
     }, 2000);
 
     this.setState(prevState => ({

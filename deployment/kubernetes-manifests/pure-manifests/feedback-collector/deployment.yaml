@@ -4,7 +4,7 @@ metadata:
   name: feedback-collector
   namespace: astair
 data:
-  postgresql-url: "postgres-url-here"
+  postgresql-url: "postgres://astair%40astair:astarPostgres2019.@astair.postgres.database.azure.com:5432/astair"
 
 ---
 
@@ -46,7 +46,7 @@ spec:
       labels:        
         app: feedback-collector
       annotations:
-        checksum/config-map: 6naYyeOwWH6tk787aXYz5aa9ab4de578d9e8947c8142f135ec17140baf49b68f
+        checksum/config-map: 6naYyeOwWH6tk686aXYz5aa9ab4de5t8d9e8947c8142f135ec17140baf49b68f
     spec:
       containers:
         - image: astar.azurecr.io/astair-feedback-collector:0.0.3
